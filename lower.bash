@@ -1,0 +1,1 @@
+lower () { tr '[:upper:]' '[:lower:]'; }

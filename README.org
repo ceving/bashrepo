@@ -1,0 +1,2 @@
+* About
+  This is an attempt to create a library for reusable Bash code.
