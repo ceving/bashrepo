@@ -55,6 +55,6 @@
    Curl is not needed any more.
 
 ** License
-   Bashrepo is licensed under the [[license][GNU General Public License]].
+   BashRepo is licensed under the [[license][GNU General Public License]].
 
 #+LINK: license https://raw.githubusercontent.com/ceving/bashrepo/master/LICENSE
