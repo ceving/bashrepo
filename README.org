@@ -39,7 +39,7 @@
    If you are ready with your development you have to use bashrepo to
    release your code before you can install it.
 
-   : install <(bashrepo myscript) /usr/local/bin/myscript
+   : install <(bashrepo example/abc) ~/bin/abc
 
 ** Requirements
    BashRepo needs an up to date Bash version supporting associative
