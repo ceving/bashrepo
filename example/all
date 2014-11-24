@@ -1,0 +1,5 @@
+#! /bin/bash
+
+source bashrepo
+
+import all
