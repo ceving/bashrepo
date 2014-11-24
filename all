@@ -2,19 +2,19 @@
 ##
 ## Index of all BashRepo functions.
 ##
-## Time-stamp: <2014-11-24 15:46:42 szi>
+## Time-stamp: <2014-11-24 16:13:39 szi>
 ##
 
-# Case converstion
+### Case converstion
 
 import lower
 import upper
 
-# Time stamps
+### Time stamps
 
 import timestamp
 import nanotimestamp
 
-# Exit handling
+### Exit handling
 
 import atexit
