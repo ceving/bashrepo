@@ -2,7 +2,7 @@
 ##
 ## BASHREPO - A source repository for Bash.
 ##
-## Time-stamp: <2014-11-24 16:02:44 szi>
+## Time-stamp: <2014-11-24 16:52:43 szi>
 ##
 
 set -eu
@@ -46,19 +46,21 @@ bashrepo-download ()
 }
 
 # Ensure that we have a particular function in the local repository.
+BASHREPO_UPDATE_EXISTING=
 bashrepo-update ()
 {
   local repo=$1; shift
   local func=$1; shift
 
-  if [ ! -e "$BASHREPO_LOCAL/$repo/$func" ]; then
+  if [ ! -d "$BASHREPO_LOCAL/$repo" ]; then
     if [ -z "${BASHREPO[$repo]:-}" ]; then
       echo "ERROR: $0: import: repository '$repo' is undefined." >&2
       exit 1
     fi
-    if [ ! -d "$BASHREPO_LOCAL/$repo" ]; then
-      mkdir -p "$BASHREPO_LOCAL/$repo"
-    fi
+    mkdir -p "$BASHREPO_LOCAL/$repo"
+  fi
+  if [ ! -e "$BASHREPO_LOCAL/$repo/$func" ] || [ "$BASHREPO_UPDATE_EXISTING" ]
+  then
     bashrepo-download "${BASHREPO[$repo]}/$func" "$BASHREPO_LOCAL/$repo/$func"
   fi
 }
@@ -131,6 +133,14 @@ bashrepo-release ()
     esac
   done < "$file"
 }
+
+# Parse options.
+while getopts 'u' OPTION; do
+  case $OPTION in
+    u) BASHREPO_UPDATE_EXISTING=yes;;
+  esac
+done
+shift $((OPTIND-1))
 
 # Release a file if called with an argument
 if [ "${1:-}" ] && [ -e "$1" ]; then
