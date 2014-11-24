@@ -18,7 +18,8 @@
 ** Usage
    Install the bashrepo program somewhere in your PATH.
 
-   : install bashrepo /usr/local/bin/bashrepo
+   : install <(curl -sSL https://raw.githubusercontent.com/ceving/bashrepo/master/bashrepo) ~/bin/bashrepo
+
 
    Then you have to source it in your own script.
 
