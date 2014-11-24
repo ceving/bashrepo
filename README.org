@@ -4,16 +4,17 @@
    This is an attempt to create a library for reusable Bash code.
 
    BashRepo provides you an import function for your Bash code to
-   import already defined Bash function from network repositories.
+   import already defined Bash functions from network repositories.
    You can use the default repository, you can define your own
    repository or you can use other public repositories.  When you
    import a function from a repository it gets automatically
    downloaded and stored in your HOME direcotry.  This works a bit
    like Maven for JAR packages.  During your development the functions
-   are sourced from your local repository.  If you have finishe your
-   work you have to release your program.  By this all used functions
-   are included in just one single program.  This program does not
-   need any repositories any more.
+   are sourced from your local repository.  If you have finished your
+   work you have to release your program.  By this all imported
+   functions are included into your program producing a single file
+   without any dependencies.  The released program does not need any
+   repositories any more.
 
 ** Usage
    Install the bashrepo program somewhere in your PATH.
