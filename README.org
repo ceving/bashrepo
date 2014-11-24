@@ -48,6 +48,13 @@
    : if [ $(example/abc) = $(~/bin/abc) ]; then echo fine; fi
    : fine
 
+   Use the -u option to update already downloaded functions.
+
+   : bashrepo -u example/all
+
+   Without the -u option BashRepo would not check any repository for
+   newer versions of already downloaded functions.
+
 ** Requirements
    BashRepo needs an up to date Bash version supporting associative
    arrays and Curl to download code from repositories.  Curl is only
