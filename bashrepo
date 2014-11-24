@@ -1,0 +1,140 @@
+#! /bin/bash
+##
+## BASHREPO - A source repository for Bash.
+##
+## Time-stamp: <2014-11-24 14:22:00 szi>
+##
+
+set -eu
+
+declare -A BASHREPO
+declare -A BASHREPO_SOURCED
+declare -A BASHREPO_INCLUDED
+BASHREPO_LOCAL=$HOME/.bashrepo
+
+# Adds a new repository to the list of repositories or changes an
+# already defined repository.
+bashrepo ()
+{
+  local name=$1; shift
+  local url=$1; shift
+
+  BASHREPO[$name]=$url
+}
+
+# Define a default repository.
+bashrepo DEFAULT https://raw.githubusercontent.com/ceving/bashrepo/master
+
+# Download a file from a repository.
+bashrepo-download ()
+{
+  local src=$1; shift
+  local dst=$1; shift
+
+  if [ -e "$dst" ]; then
+    curl -sSL "$src" -z "$dst" -o "$dst"
+  else
+    curl -sSL "$src" -o "$dst"
+  fi
+
+  local result=$?
+
+  if ((result != 0)); then
+    rm -f "$dst"
+    return $result
+  fi
+}
+
+# Ensure that we have a particular function in the local repository.
+bashrepo-update ()
+{
+  local repo=$1; shift
+  local func=$1; shift
+
+  if [ ! -e "$BASHREPO_LOCAL/$repo/$func" ]; then
+    if [ -z "${BASHREPO[$repo]:-}" ]; then
+      echo "ERROR: $0: import: repository '$repo' is undefined." >&2
+      exit 1
+    fi
+    if [ ! -d "$BASHREPO_LOCAL/$repo" ]; then
+      mkdir -p "$BASHREPO_LOCAL/$repo"
+    fi
+    bashrepo-download "${BASHREPO[$repo]}/$func" "$BASHREPO_LOCAL/$repo/$func"
+  fi
+}
+
+# Import a function.
+bashrepo-import ()
+{
+  local action=source
+
+  if [ "${1:-}" = '-i' ]; then
+    action=include
+    shift
+  fi
+
+  local repo
+  local func
+
+  case $# in
+    1) repo=DEFAULT; func=$1; shift;;
+    2) repo=$1; func=$2; shift 2;;
+    *) echo "ERROR: $0: import: argument missing."; exit 1;;
+  esac
+
+  local file="$BASHREPO_LOCAL/$repo/$func"
+
+  bashrepo-update "$repo" "$func"
+	
+  case $action in
+    source)
+      if [ -z "${BASHREPO_SOURCED[$file]:-}" ]; then
+	source "$file"
+	BASHREPO_SOURCED["$file"]=yes
+      fi;;
+    include)
+      if [ -z "${BASHREPO_INCLUDED[$file]:-}" ]; then
+        echo "#BASHREPO ${BASHREPO[$repo]}"
+	echo "#BEGIN $func"
+	cat "$BASHREPO_LOCAL/$repo/$func"
+	echo "#END $func"
+	echo
+	BASHREPO_INCLUDED["$file"]=yes
+      fi;;
+  esac
+}
+
+# Release a script by including all imports.
+bashrepo-release ()
+{
+  local file=$1; shift
+  local line
+  local cmd
+  local arg1
+  local arg2
+
+  while IFS= read line; do
+    case $line in
+      import\ [0-9a-zA-Z]*)
+	read cmd arg1 arg2 <<<"$line"
+	if [ "${arg2:-}" ]; then
+	  bashrepo-import -i "$arg1" "$arg2"
+	else
+	  bashrepo-import -i "$arg1"
+	fi
+	;;
+      *)
+	echo "$line"
+	;;
+    esac
+  done < "$file"
+}
+
+# Release a file if called with an argument
+if [ "${1:-}" ] && [ -e "$1" ]; then
+  bashrepo-release "$1"
+  exit
+fi
+
+# Create an alias for importing.
+import () { bashrepo-import "$@"; }

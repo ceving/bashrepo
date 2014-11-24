@@ -1,0 +1,10 @@
+#! /bin/bash
+
+source bashrepo
+
+import upper
+import lower
+
+if [ $(echo abc | upper | lower) = abc ]; then
+  echo fine
+fi
