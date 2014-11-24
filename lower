@@ -1,1 +1,11 @@
-lower () { tr '[:upper:]' '[:lower:]'; }
+## -*- mode: sh -*-
+##
+## Convert input to upper case.
+##
+## Time-stamp: <2014-11-24 15:48:23 szi>
+##
+
+lower ()
+{
+  tr '[:upper:]' '[:lower:]'
+}

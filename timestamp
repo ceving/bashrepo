@@ -1,0 +1,11 @@
+## -*- mode: sh -*-
+##
+## Generate a time stamp with seconds precision and time zone.
+##
+## Time-stamp: <2014-11-24 15:51:25 szi>
+##
+
+timestamp ()
+{
+  date '+%Y-%m-%d %H:%M:%S %z'
+}

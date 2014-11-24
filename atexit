@@ -1,0 +1,27 @@
+## -*- mode: sh -*-
+##
+## Add callbacks to a list of exit functions executed when the program
+## exits.
+##
+## Time-stamp: <2014-11-24 15:50:47 szi>
+##
+
+# List of expressions which should be executed before exiting.
+ATEXIT=()
+
+# Execute the atexit expressions.
+atexit-handler ()
+{
+  local expr
+  if ((${#ATEXIT[@]} > 0)); then
+    for expr in "${ATEXIT[@]}"; do
+      eval "$expr" || true
+    done
+  fi
+}
+
+# Execute the handler in case of an EXIT signal (1 and 15).
+trap atexit-handler EXIT
+
+# Add an expression to the list of atexit expressions.
+atexit () { ATEXIT+=("$@"); }

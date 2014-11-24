@@ -1,0 +1,11 @@
+## -*- mode: sh -*-
+##
+## Generate a time stamp with nano seconds precision and time zone.
+##
+## Time-stamp: <2014-11-24 15:51:59 szi>
+##
+
+nanotimestamp ()
+{
+  date '+%Y-%m-%d %H:%M:%S,%N %z'
+}

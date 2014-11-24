@@ -1,0 +1,20 @@
+## -*- mode: sh -*-
+##
+## Index of all BashRepo functions.
+##
+## Time-stamp: <2014-11-24 15:46:42 szi>
+##
+
+# Case converstion
+
+import lower
+import upper
+
+# Time stamps
+
+import timestamp
+import nanotimestamp
+
+# Exit handling
+
+import atexit
