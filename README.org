@@ -41,6 +41,12 @@
 
    : install <(bashrepo example/abc) ~/bin/abc
 
+   The development version and the released version work in the same
+   way.
+
+   : if [ $(example/abc) = $(~/bin/abc) ]; then echo fine; fi
+   : fine
+
 ** Requirements
    BashRepo needs an up to date Bash version supporting associative
    arrays and Curl to download code from repositories.  Curl is only
