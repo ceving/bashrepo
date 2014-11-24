@@ -2,7 +2,7 @@
 ##
 ## BASHREPO - A source repository for Bash.
 ##
-## Time-stamp: <2014-11-24 14:22:00 szi>
+## Time-stamp: <2014-11-24 15:09:23 szi>
 ##
 
 set -eu
@@ -122,6 +122,8 @@ bashrepo-release ()
 	else
 	  bashrepo-import -i "$arg1"
 	fi
+	;;
+      source\ bashrepo*)
 	;;
       *)
 	echo "$line"
