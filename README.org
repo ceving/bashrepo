@@ -1,2 +1,52 @@
-* About
-  This is an attempt to create a library for reusable Bash code.
+* BashRepo
+
+** About
+   This is an attempt to create a library for reusable Bash code.
+
+   BashRepo provides you an import function for your Bash code to
+   import already defined Bash function from network repositories.
+   You can use the default repository, you can define your own
+   repository or you can use other public repositories.  When you
+   import a function from a repository it gets automatically
+   downloaded and stored in your HOME direcotry.  This works a bit
+   like Maven for JAR packages.  During your development the functions
+   are sourced from your local repository.  If you have finishe your
+   work you have to release your program.  By this all used functions
+   are included in just one single program.  This program does not
+   need any repositories any more.
+
+** Usage
+   Install the bashrepo program somewhere in your PATH.
+
+   : install bashrepo /usr/local/bin/bashrepo
+
+   Then you have to source it in your own script.
+
+   : source bashrepo
+
+   After that you can start importing functions from the repository.
+
+   : import upper
+   : import lower
+
+   And then you can use them.
+
+   : if [ $(echo abc | upper | lower) = abc ]; then
+   :   echo fine
+   : fi
+
+   If you are ready with your development you have to use bashrepo to
+   release your code before you can install it.
+
+   : install <(bashrepo myscript) /usr/local/bin/myscript
+
+** Requirements
+   Bashrepo needs an up to date Bash version supporting associative
+   arrays and Curl to download code from repositories.  Curl is only
+   needed during development.  After you have released your program
+   Curl is not needed any more.
+
+** License
+   Bashrepo is licensed under the [[license][GNU General Public License]].
+
+#+LINK: license https://raw.githubusercontent.com/ceving/bashrepo/master/LICENSE
