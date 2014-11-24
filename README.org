@@ -41,7 +41,7 @@
    : install <(bashrepo myscript) /usr/local/bin/myscript
 
 ** Requirements
-   Bashrepo needs an up to date Bash version supporting associative
+   BashRepo needs an up to date Bash version supporting associative
    arrays and Curl to download code from repositories.  Curl is only
    needed during development.  After you have released your program
    Curl is not needed any more.
